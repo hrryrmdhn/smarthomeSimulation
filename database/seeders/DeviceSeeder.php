@@ -13,6 +13,7 @@ class DeviceSeeder extends Seeder
      */
     public function run(): void
     {
+        // buat isi data di tabel databasenya, mau beda? tinggal ganti dulu aja devicenya sesuai yang diinginkan, baru jalanin seednya, dengan semua nya dalam kondisi awal false / 0 / off
         $devices = [
             ['label' => 'Lampu Kamar', 'status' => false],
             ['label' => 'Lampu Ruang Tamu', 'status' => false],

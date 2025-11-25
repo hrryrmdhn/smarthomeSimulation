@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        //buat bikin tabel dengan nama device, terdiri dari total 5 kolom
         Schema::create('devices', function (Blueprint $table) {
             $table->id();
             $table->string('label');

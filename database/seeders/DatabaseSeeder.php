@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
+        // buat panggil file DeviceSeeder biar bisa masuk ke tabel, kalo engga ada bakalan kaga kekirim datanya
         $this->call(DeviceSeeder::class);
     }
 }

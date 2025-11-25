@@ -3,10 +3,23 @@
 use App\Http\Controllers\DeviceController;
 use Illuminate\Support\Facades\Route;
 
-// ========== WEB ROUTES ==========
+// ============================================================================
+// ROUTE UNTUK TAMPILAN WEB (HTML)
+// ============================================================================
+
+// Route utama: saat user buka alamat website (localhost:8000/) 
+// maka akan menjalankan function index() di DeviceController
+// ->name('devices.index') memberi nama route untuk bisa dipanggil di view
 Route::get('/', [DeviceController::class, 'index'])->name('devices.index');
 
-// ========== API ROUTES (pindah ke sini) ==========
+
+// ============================================================================
+// ROUTE UNTUK API ENDPOINT (JSON)
+// Bagian ini yang membuat Laravel dan NodeMCU bisa komunikasi
+// ============================================================================
+
+// Route test: untuk cek apakah API bekerja
+// Bisa diakses via: GET /api/test
 Route::get('/api/test', function () {
     return response()->json([
         'message' => '✅ Laravel API is working!',
@@ -19,11 +32,24 @@ Route::get('/api/test', function () {
     ]);
 });
 
+// Route untuk ambil status semua devices
+// Bisa diakses via: GET /api/devices/status
+// Akan menjalankan function apiStatus() di DeviceController
 Route::get('/api/devices/status', [DeviceController::class, 'apiStatus']);
-// Untuk AJAX dari browser, kita perlu POST dengan _method=PUT
+
+// Route untuk update status device tertentu
+// Bisa diakses via: PUT atau POST /api/devices/{id}
+// {id} akan diganti dengan ID device (1-6)
+// Menggunakan match() karena browser AJAX butuh POST, tapi logicnya PUT
 Route::match(['put', 'post'], '/api/devices/{id}', [DeviceController::class, 'apiUpdate']);
 
-// Fallback untuk undefined API routes
+
+// ============================================================================
+// ROUTE FALLBACK (Penanganan error)
+// ============================================================================
+
+// Route ini akan dijalankan jika user akses endpoint yang tidak terdaftar
+// Misal: GET /api/abc atau POST /api/tidak-ada
 Route::fallback(function () {
     return response()->json([
         'success' => false,
@@ -33,5 +59,5 @@ Route::fallback(function () {
             'GET /api/devices/status',
             'PUT /api/devices/{id}'
         ]
-    ], 404);
+    ], 404); // HTTP Status Code 404 = Not Found
 });
