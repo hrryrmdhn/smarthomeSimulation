@@ -42,6 +42,8 @@ Route::get('/api/devices/status', [DeviceController::class, 'apiStatus']);
 // {id} akan diganti dengan ID device (1-6)
 // Menggunakan match() karena browser AJAX butuh POST, tapi logicnya PUT
 Route::match(['put', 'post'], '/api/devices/{id}', [DeviceController::class, 'apiUpdate']);
+// Bisa diakses via: POST /api/devices/{id}/mode
+Route::post('/api/devices/{id}/mode', [DeviceController::class, 'apiUpdateMode']);
 
 
 // ============================================================================
